@@ -1,0 +1,23 @@
+:root {
+  --bg: #0a0a0b;
+  --bg-soft: #111113;
+  --gold: #c9a24b;
+  --gold-soft: #8a6e2f;
+  --gold-glow: rgba(201, 162, 75, 0.35);
+  --ink: #f4ecd8;
+  --ink-soft: rgba(244, 236, 216, 0.7);
+  --ink-mute: rgba(244, 236, 216, 0.45);
+  --ink-faint: rgba(244, 236, 216, 0.28);
+  --line: rgba(201, 162, 75, 0.22);
+  --line-soft: rgba(244, 236, 216, 0.1);
+
+  --font-serif: "Cormorant Garamond", "Didot", "Bodoni 72", "Times New Roman",
+    serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+    Inter, system-ui, sans-serif;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-slow: cubic-bezier(0.16, 0.84, 0.3, 1);
+
+  --shell-max: 430px;
+}
