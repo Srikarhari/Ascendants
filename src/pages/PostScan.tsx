@@ -7,12 +7,18 @@ interface Props {
   frozenFrame: string | null;
   onContinue: () => void;
   onBack: () => void;
+  onForward: () => void;
 }
 
-export default function PostScan({ frozenFrame, onContinue, onBack }: Props) {
+export default function PostScan({
+  frozenFrame,
+  onContinue,
+  onBack,
+  onForward,
+}: Props) {
   const [revealed, setRevealed] = useState(false);
 
-  useSwipeBack({ onBack });
+  useSwipeBack({ onBack, onForward });
 
   useEffect(() => {
     const t = window.setTimeout(() => setRevealed(true), 1600);

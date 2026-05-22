@@ -1,22 +1,29 @@
 import { useEffect } from "react";
 
 interface Options {
-  /** Called when a horizontal back-gesture is detected. */
-  onBack: () => void;
-  /** When true, gesture is ignored (e.g. modal is open). */
+  /** Called on a horizontal left-swipe (finger moves left, dx < 0). */
+  onBack?: () => void;
+  /** Called on a horizontal right-swipe (finger moves right, dx > 0). */
+  onForward?: () => void;
+  /** When true, gestures are ignored (e.g. modal is open). */
   disabled?: boolean;
-  /** Minimum horizontal travel in px to count as a back-swipe. Default 60. */
+  /** Minimum horizontal travel in px to count as a swipe. Default 60. */
   threshold?: number;
 }
 
 /**
- * Listen for a horizontal swipe-back gesture on the document.
- * - Triggers on swipe-right OR swipe-left (either direction)
- *   once the horizontal travel passes threshold and is clearly horizontal
- *   (|dx| > 1.5 * |dy|).
- * - Ignores multi-touch, vertical scrolls, and short gestures.
+ * Listen for a horizontal swipe gesture on the document.
+ * - Left swipe (dx < 0) → onBack
+ * - Right swipe (dx > 0) → onForward
+ * - Requires |dx| ≥ threshold and clearly horizontal (|dx| > 1.5 * |dy|).
+ * - Ignores multi-touch and vertical scrolls.
  */
-export function useSwipeBack({ onBack, disabled = false, threshold = 60 }: Options) {
+export function useSwipeBack({
+  onBack,
+  onForward,
+  disabled = false,
+  threshold = 60,
+}: Options) {
   useEffect(() => {
     if (disabled) return;
 
@@ -43,7 +50,11 @@ export function useSwipeBack({ onBack, disabled = false, threshold = 60 }: Optio
       const dy = t.clientY - startY;
       if (Math.abs(dx) < threshold) return;
       if (Math.abs(dx) <= Math.abs(dy) * 1.5) return; // vertical-ish — ignore
-      onBack();
+      if (dx < 0) {
+        onBack?.();
+      } else {
+        onForward?.();
+      }
     };
 
     const onTouchCancel = () => {
@@ -59,5 +70,5 @@ export function useSwipeBack({ onBack, disabled = false, threshold = 60 }: Optio
       document.removeEventListener("touchend", onTouchEnd);
       document.removeEventListener("touchcancel", onTouchCancel);
     };
-  }, [onBack, disabled, threshold]);
+  }, [onBack, onForward, disabled, threshold]);
 }

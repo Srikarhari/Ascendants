@@ -9,15 +9,16 @@ import { useSwipeBack } from "../hooks/useSwipeBack";
 interface Props {
   onComplete: (frozenFrameDataUrl: string | null) => void;
   onBack: () => void;
+  onForward: () => void;
 }
 
 const TOTAL_MS = 18_000;
 
-export default function FaceScan({ onComplete, onBack }: Props) {
+export default function FaceScan({ onComplete, onBack, onForward }: Props) {
   const [progress, setProgress] = useState(0);
   const cameraRef = useRef<CameraViewHandle>(null);
 
-  useSwipeBack({ onBack });
+  useSwipeBack({ onBack, onForward });
 
   useEffect(() => {
     const start = performance.now();

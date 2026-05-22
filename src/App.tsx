@@ -12,6 +12,11 @@ const PREVIOUS_PAGE: Partial<Record<Page, Page>> = {
   choose: "postScan",
 };
 
+const NEXT_PAGE: Partial<Record<Page, Page>> = {
+  scan: "postScan",
+  postScan: "choose",
+};
+
 export default function App() {
   const [page, setPage] = useState<Page>("landing");
   const [frozenFrame, setFrozenFrame] = useState<string | null>(null);
@@ -19,6 +24,11 @@ export default function App() {
   const goBackFrom = useCallback((current: Page) => {
     const prev = PREVIOUS_PAGE[current];
     if (prev) setPage(prev);
+  }, []);
+
+  const goForwardFrom = useCallback((current: Page) => {
+    const next = NEXT_PAGE[current];
+    if (next) setPage(next);
   }, []);
 
   return (
@@ -31,6 +41,7 @@ export default function App() {
             setPage("postScan");
           }}
           onBack={() => goBackFrom("scan")}
+          onForward={() => goForwardFrom("scan")}
         />
       )}
       {page === "postScan" && (
@@ -38,6 +49,7 @@ export default function App() {
           frozenFrame={frozenFrame}
           onContinue={() => setPage("choose")}
           onBack={() => goBackFrom("postScan")}
+          onForward={() => goForwardFrom("postScan")}
         />
       )}
       {page === "choose" && <ChoosePath onBack={() => goBackFrom("choose")} />}
