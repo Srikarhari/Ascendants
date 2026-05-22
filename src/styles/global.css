@@ -70,9 +70,9 @@ button {
   justify-content: center;
   overflow: hidden;
   background-color: #000;
-  padding: calc(env(safe-area-inset-top) + 12px)
+  padding: env(safe-area-inset-top)
     calc(env(safe-area-inset-right) + 20px)
-    calc(env(safe-area-inset-bottom) + 12px)
+    env(safe-area-inset-bottom)
     calc(env(safe-area-inset-left) + 20px);
 }
 
@@ -92,7 +92,6 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
 }
 
 .logo-intro__face {
@@ -111,13 +110,11 @@ button {
 }
 
 .logo-intro__name {
-  width: min(86vw, 400px);
-  /* the name PNG is 1:1 with the wordmark in a horizontal band;
-     crop to that band so the landing fits one viewport */
-  aspect-ratio: 5 / 1;
+  width: min(78vw, 360px);
+  height: auto;
   display: block;
-  object-fit: cover;
-  object-position: center 19%;
+  margin-top: 24px;
+  visibility: visible;
   opacity: 0;
   transition: opacity 900ms var(--ease-slow);
 }
@@ -131,7 +128,7 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  margin-top: 64px;
+  margin-top: 24px;
   opacity: 0;
   transform: translateY(10px);
   transition:
