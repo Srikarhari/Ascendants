@@ -80,65 +80,40 @@ button {
 
 .logo-intro {
   width: min(86vw, 390px);
-  aspect-ratio: 1 / 1;
   position: relative;
   margin: 0 auto;
-  will-change: opacity;
-  opacity: 0;
-  transform: none;
-  transition: opacity 800ms var(--ease-slow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
 }
 
-.logo-intro.is-visible {
+.logo-intro__face {
+  width: min(64vw, 280px);
+  height: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0;
+  transform: none;
+  transition: opacity 900ms var(--ease-slow);
+}
+
+.logo-intro__face.is-visible {
   opacity: 1;
 }
 
-.logo-intro__img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.logo-intro__name {
+  width: min(72vw, 320px);
+  height: auto;
   display: block;
-  filter: drop-shadow(0 0 0 transparent);
-  /* Initial mask: wordmark band fully hidden until reveal */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 62%,
-    rgba(0, 0, 0, 0) 64%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 62%,
-    rgba(0, 0, 0, 0) 64%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  transition:
-    filter 1600ms var(--ease-slow),
-    -webkit-mask-image 900ms var(--ease-slow),
-    mask-image 900ms var(--ease-slow);
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 900ms var(--ease-slow);
 }
 
-.logo-intro.is-illuminated .logo-intro__img {
-  filter: drop-shadow(0 0 6px rgba(201, 162, 75, 0.18));
-}
-
-.logo-intro.is-wordmark .logo-intro__img {
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 100%,
-    #000 100%,
-    #000 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 100%,
-    #000 100%,
-    #000 100%
-  );
+.logo-intro__name.is-visible {
+  opacity: 1;
 }
 
 .landing__cta-wrap {
