@@ -8,8 +8,9 @@
 html,
 body,
 #root {
+  margin: 0;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   background: #000;
   color: var(--ink);
   font-family: var(--font-sans);
@@ -20,19 +21,22 @@ body,
 
 html,
 body {
-  height: 100%;
   overflow-x: hidden;
 }
 
+body {
+  position: relative;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
 #root {
-  min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
 }
 
 .app-shell {
   width: 100%;
-  min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
   max-width: var(--shell-max);
@@ -40,7 +44,6 @@ body {
   position: relative;
   background: #000;
   overflow-x: hidden;
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 button {
@@ -57,46 +60,43 @@ button {
 
 .landing {
   width: 100%;
-  min-height: 100vh;
-  min-height: 100svh;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
   min-height: 100dvh;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr auto;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  overflow: hidden;
   background-color: #000;
-  padding: calc(env(safe-area-inset-top) + 16px)
-    calc(env(safe-area-inset-right) + 24px)
-    env(safe-area-inset-bottom)
-    calc(env(safe-area-inset-left) + 24px);
+  padding: calc(env(safe-area-inset-top) + 12px)
+    calc(env(safe-area-inset-right) + 20px)
+    calc(env(safe-area-inset-bottom) + 12px)
+    calc(env(safe-area-inset-left) + 20px);
 }
 
 .landing__logo-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   width: 100%;
-  max-width: 100%;
   margin: 0 auto;
-  /* nudge the whole stack slightly below optical centre */
-  margin-top: clamp(24px, 8vh, 72px);
 }
 
 .logo-intro {
-  width: min(92vw, 420px);
-  position: relative;
+  width: 100%;
+  max-width: 420px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 28px;
 }
 
 .logo-intro__face {
-  width: min(82vw, 390px);
+  width: min(72vw, 330px);
   height: auto;
   display: block;
   object-fit: contain;
@@ -111,10 +111,13 @@ button {
 }
 
 .logo-intro__name {
-  width: min(72vw, 320px);
-  height: auto;
+  width: min(86vw, 400px);
+  /* the name PNG is 1:1 with the wordmark in a horizontal band;
+     crop to that band so the landing fits one viewport */
+  aspect-ratio: 5 / 1;
   display: block;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center 19%;
   opacity: 0;
   transition: opacity 900ms var(--ease-slow);
 }
@@ -128,12 +131,17 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  padding-bottom: 12px;
+  margin-top: 64px;
   opacity: 0;
   transform: translateY(10px);
   transition:
     opacity 1400ms var(--ease-slow),
     transform 1400ms var(--ease-slow);
+}
+
+.landing__cta-wrap .btn-primary {
+  width: min(72vw, 340px);
+  text-align: center;
 }
 
 .landing__cta-wrap.is-visible {
