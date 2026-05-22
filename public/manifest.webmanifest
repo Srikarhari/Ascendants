@@ -1,0 +1,25 @@
+{
+  "name": "Ascendants",
+  "short_name": "Ascendants",
+  "id": "/Ascendants/",
+  "start_url": "/Ascendants/",
+  "scope": "/Ascendants/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/Ascendants/ascendants-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Ascendants/ascendants-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
