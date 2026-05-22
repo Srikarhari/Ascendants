@@ -8,8 +8,9 @@
 html,
 body,
 #root {
+  width: 100%;
   min-height: 100%;
-  background: var(--bg);
+  background: #000;
   color: var(--ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -20,12 +21,13 @@ body,
 html,
 body {
   height: 100%;
-  width: 100%;
   overflow-x: hidden;
 }
 
-body {
-  background: #000;
+#root {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
 }
 
 .app-shell {
@@ -36,7 +38,9 @@ body {
   max-width: var(--shell-max);
   margin: 0 auto;
   position: relative;
+  background: #000;
   overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 button {
@@ -61,10 +65,10 @@ button {
   grid-template-rows: 1fr auto;
   justify-items: center;
   align-items: center;
-  background: #000;
+  background-color: #000;
   padding: calc(env(safe-area-inset-top) + 16px)
     calc(env(safe-area-inset-right) + 24px)
-    calc(env(safe-area-inset-bottom) + 24px)
+    env(safe-area-inset-bottom)
     calc(env(safe-area-inset-left) + 24px);
 }
 
@@ -76,26 +80,29 @@ button {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
+  /* nudge the whole stack slightly below optical centre */
+  margin-top: clamp(24px, 8vh, 72px);
 }
 
 .logo-intro {
-  width: min(86vw, 390px);
+  width: min(92vw, 420px);
   position: relative;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  gap: 10px;
 }
 
 .logo-intro__face {
-  width: min(64vw, 280px);
+  width: min(82vw, 390px);
   height: auto;
   display: block;
   object-fit: contain;
+  /* optical correction — face mark is not centered in its PNG box */
+  transform: translateX(-2px);
   opacity: 0;
-  transform: none;
   transition: opacity 900ms var(--ease-slow);
 }
 
