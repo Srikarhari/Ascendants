@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
 interface Options {
-  /** Called on a horizontal left-swipe (finger moves left, dx < 0). */
-  onBack?: () => void;
   /** Called on a horizontal right-swipe (finger moves right, dx > 0). */
+  onBack?: () => void;
+  /** Called on a horizontal left-swipe (finger moves left, dx < 0). */
   onForward?: () => void;
   /** When true, gestures are ignored (e.g. modal is open). */
   disabled?: boolean;
@@ -13,8 +13,8 @@ interface Options {
 
 /**
  * Listen for a horizontal swipe gesture on the document.
- * - Left swipe (dx < 0) → onBack
- * - Right swipe (dx > 0) → onForward
+ * - Right swipe (dx > 0) → onBack
+ * - Left swipe (dx < 0) → onForward
  * - Requires |dx| ≥ threshold and clearly horizontal (|dx| > 1.5 * |dy|).
  * - Ignores multi-touch and vertical scrolls.
  */
@@ -51,9 +51,9 @@ export function useSwipeBack({
       if (Math.abs(dx) < threshold) return;
       if (Math.abs(dx) <= Math.abs(dy) * 1.5) return; // vertical-ish — ignore
       if (dx < 0) {
-        onBack?.();
-      } else {
         onForward?.();
+      } else {
+        onBack?.();
       }
     };
 
