@@ -13,10 +13,10 @@ export default function ScanOverlay({ progress }: Props) {
   const VBW = 360;
   const VBH = 780;
   const cx = VBW / 2;
-  const cy = VBH / 2 - 10;
-  const rx = 142;
-  const ry = 250; // oval ≈ 64% of viewBox height → reads ~70% of phone viewport
-  const ringR = 290;
+  const cy = VBH / 2 + 30;
+  const rx = 115;
+  const ry = 165; // oval reads as face guide, sits inside the ring
+  const ringR = 170; // ≤ VBW/2 − 10 so the full circle fits inside iPhone 16 width
   const ringCircumference = 2 * Math.PI * ringR;
   const ringDashOffset =
     ringCircumference * (1 - Math.min(1, Math.max(0, progress)));

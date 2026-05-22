@@ -9,7 +9,7 @@ export default function Landing({ onBegin }: Props) {
   const [ctaVisible, setCtaVisible] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setCtaVisible(true), 4800);
+    const t = setTimeout(() => setCtaVisible(true), 2200);
     return () => clearTimeout(t);
   }, []);
 
@@ -31,14 +31,11 @@ export default function Landing({ onBegin }: Props) {
           type="button"
           className="btn-primary"
           onClick={onBegin}
-          aria-label="Begin Ascension Scan"
+          aria-label="Begin Ascension"
         >
-          Begin Ascension Scan
+          Begin Ascension
         </button>
-        <div className="landing__cadence">Daily protocol · ~2 min</div>
       </div>
-
-      <div className="landing__footer">v3.0 Experimental Protocol</div>
     </section>
   );
 }

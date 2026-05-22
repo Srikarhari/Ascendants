@@ -26,6 +26,16 @@ export default function ScanInstructions({ intervalMs = 2600 }: Props) {
     <div className="scan-instructions" aria-live="polite">
       <div
         className={[
+          "scan-instructions__step",
+          visible && "is-visible",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
+        Step {idx + 1} / {SCAN_STEPS.length}
+      </div>
+      <div
+        className={[
           "scan-instructions__primary",
           visible && "is-visible",
         ]

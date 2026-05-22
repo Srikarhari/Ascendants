@@ -6,25 +6,13 @@ interface Props {
   onContinue: () => void;
 }
 
-const CONVERSION_STEPS = ["Face", "Profile", "Projection", "Ascension"] as const;
-
 export default function PostScan({ frozenFrame, onContinue }: Props) {
-  const [revealedCount, setRevealedCount] = useState(0);
+  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
-    const timers: number[] = [];
-    for (let i = 1; i <= CONVERSION_STEPS.length; i++) {
-      timers.push(
-        window.setTimeout(() => setRevealedCount(i), 900 + i * 900)
-      );
-    }
-    const done = window.setTimeout(
-      onContinue,
-      900 + CONVERSION_STEPS.length * 900 + 3200
-    );
-    timers.push(done);
-    return () => timers.forEach(clearTimeout);
-  }, [onContinue]);
+    const t = window.setTimeout(() => setRevealed(true), 1600);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <section className="postscan">
@@ -42,40 +30,29 @@ export default function PostScan({ frozenFrame, onContinue }: Props) {
         <WireframeFace />
       </div>
 
-      <div className="conversion" aria-live="polite">
-        {CONVERSION_STEPS.map((label, i) => {
-          const visible = revealedCount > i;
-          const isFinal = i === CONVERSION_STEPS.length - 1;
-          return (
-            <span key={label} style={{ display: "contents" }}>
-              {i > 0 && (
-                <span
-                  className={[
-                    "conversion__arrow",
-                    visible && "is-visible",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  aria-hidden="true"
-                >
-                  ↓
-                </span>
-              )}
-              <span
-                className={[
-                  "conversion__step",
-                  isFinal && "is-final",
-                  visible && "is-visible",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-              >
-                {label}
-              </span>
-            </span>
-          );
-        })}
+      <div
+        className={["postscan__status", revealed && "is-visible"]
+          .filter(Boolean)
+          .join(" ")}
+        aria-live="polite"
+      >
+        Ascension profile generated
       </div>
+
+      <button
+        type="button"
+        className={[
+          "btn-primary",
+          "postscan__cta",
+          revealed && "is-visible",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        onClick={onContinue}
+        disabled={!revealed}
+      >
+        View Ascension Paths
+      </button>
     </section>
   );
 }
