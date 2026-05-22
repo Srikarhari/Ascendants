@@ -711,6 +711,55 @@ button {
 }
 
 /* ----------------------------------------------------------
+   BACK BUTTON
+---------------------------------------------------------- */
+
+.back-button {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom) + 18px);
+  left: calc(env(safe-area-inset-left) + 18px);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px 8px 10px;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.45;
+  z-index: 20;
+  background: transparent;
+  border: 1px solid rgba(201, 162, 75, 0.28);
+  border-radius: 999px;
+  transition:
+    opacity 300ms var(--ease),
+    border-color 300ms var(--ease),
+    color 300ms var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back-button:hover,
+.back-button:active,
+.back-button:focus-visible {
+  opacity: 1;
+  border-color: rgba(201, 162, 75, 0.7);
+  outline: none;
+}
+
+.back-button__glyph {
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 300;
+  letter-spacing: 0;
+  transform: translateY(-1px);
+}
+
+.back-button__label {
+  line-height: 1;
+}
+
+/* ----------------------------------------------------------
    Tablet / iPad vertical adjustments
 ---------------------------------------------------------- */
 

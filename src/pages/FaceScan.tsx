@@ -3,16 +3,21 @@ import CameraView, { CameraViewHandle } from "../components/CameraView";
 import ScanOverlay from "../components/ScanOverlay";
 import ScanInstructions from "../components/ScanInstructions";
 import RotatingDisclaimer from "../components/RotatingDisclaimer";
+import BackButton from "../components/BackButton";
+import { useSwipeBack } from "../hooks/useSwipeBack";
 
 interface Props {
   onComplete: (frozenFrameDataUrl: string | null) => void;
+  onBack: () => void;
 }
 
 const TOTAL_MS = 18_000;
 
-export default function FaceScan({ onComplete }: Props) {
+export default function FaceScan({ onComplete, onBack }: Props) {
   const [progress, setProgress] = useState(0);
   const cameraRef = useRef<CameraViewHandle>(null);
+
+  useSwipeBack({ onBack });
 
   useEffect(() => {
     const start = performance.now();
@@ -38,6 +43,7 @@ export default function FaceScan({ onComplete }: Props) {
       <ScanOverlay progress={progress} />
       <ScanInstructions />
       <RotatingDisclaimer />
+      <BackButton onBack={onBack} />
     </section>
   );
 }

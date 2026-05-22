@@ -1,11 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PathCard from "../components/PathCard";
 import ProtocolModal from "../components/ProtocolModal";
+import BackButton from "../components/BackButton";
+import { useSwipeBack } from "../hooks/useSwipeBack";
 import { PATHS, type AscensionPath } from "../data/paths";
 
-export default function ChoosePath() {
+interface Props {
+  onBack: () => void;
+}
+
+export default function ChoosePath({ onBack }: Props) {
   const [active, setActive] = useState<AscensionPath | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  const modalOpen = active !== null;
+
+  // Disable swipe-back while modal is open — first swipe should not navigate away.
+  useSwipeBack({ onBack, disabled: modalOpen });
+
+  // Escape closes the modal first; if no modal, escape goes back.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (modalOpen) {
+        setActive(null);
+      } else {
+        onBack();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [modalOpen, onBack]);
 
   const handleCardTap = (path: AscensionPath) => {
     if (expandedId === path.id) {
@@ -14,6 +39,15 @@ export default function ChoosePath() {
     } else {
       // First tap reveals the card's contents.
       setExpandedId(path.id);
+    }
+  };
+
+  // Back arrow: close modal first if open; else navigate back.
+  const handleBack = () => {
+    if (modalOpen) {
+      setActive(null);
+    } else {
+      onBack();
     }
   };
 
@@ -44,6 +78,8 @@ export default function ChoosePath() {
           onClose={() => setActive(null)}
         />
       )}
+
+      <BackButton onBack={handleBack} />
     </section>
   );
 }

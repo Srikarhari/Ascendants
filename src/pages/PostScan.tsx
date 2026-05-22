@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import WireframeFace from "../components/WireframeFace";
+import BackButton from "../components/BackButton";
+import { useSwipeBack } from "../hooks/useSwipeBack";
 
 interface Props {
   frozenFrame: string | null;
   onContinue: () => void;
+  onBack: () => void;
 }
 
-export default function PostScan({ frozenFrame, onContinue }: Props) {
+export default function PostScan({ frozenFrame, onContinue, onBack }: Props) {
   const [revealed, setRevealed] = useState(false);
+
+  useSwipeBack({ onBack });
 
   useEffect(() => {
     const t = window.setTimeout(() => setRevealed(true), 1600);
@@ -53,6 +58,8 @@ export default function PostScan({ frozenFrame, onContinue }: Props) {
       >
         View Ascension Paths
       </button>
+
+      <BackButton onBack={onBack} />
     </section>
   );
 }
