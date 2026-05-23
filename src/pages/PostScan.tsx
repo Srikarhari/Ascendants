@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import WireframeFace from "../components/WireframeFace";
+import MeshRender from "../components/MeshRender";
 import BackButton from "../components/BackButton";
 import { useSwipeBack } from "../hooks/useSwipeBack";
+import type { StoredFaceMesh } from "../lib/faceMesh";
 
 interface Props {
   frozenFrame: string | null;
+  storedMesh: StoredFaceMesh | null;
   onContinue: () => void;
   onBack: () => void;
   onForward: () => void;
@@ -12,6 +15,7 @@ interface Props {
 
 export default function PostScan({
   frozenFrame,
+  storedMesh,
   onContinue,
   onBack,
   onForward,
@@ -26,19 +30,22 @@ export default function PostScan({
   }, []);
 
   return (
-    <section className="postscan">
+    <section
+      className="postscan"
+      style={{
+        // Pure black stage — overrides .postscan's #050505 so the frame
+        // and the page share one uniform background. Without this, the
+        // .postscan__frame box reads as a visible rectangle floating on
+        // a near-black page.
+        background: "#000",
+      }}
+    >
       <div className="postscan__frame">
-        {frozenFrame ? (
-          <img
-            className="postscan__frozen"
-            src={frozenFrame}
-            alt=""
-            aria-hidden="true"
-          />
+        {storedMesh ? (
+          <MeshRender mesh={storedMesh} frozenFrame={frozenFrame} />
         ) : (
-          <div className="postscan__frozen-placeholder" />
+          <WireframeFace />
         )}
-        <WireframeFace />
       </div>
 
       <div

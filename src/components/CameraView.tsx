@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 
 export interface CameraViewHandle {
   captureFrame: () => string | null;
+  getVideoEl: () => HTMLVideoElement | null;
 }
 
 const CameraView = forwardRef<CameraViewHandle>((_props, ref) => {
@@ -64,6 +65,7 @@ const CameraView = forwardRef<CameraViewHandle>((_props, ref) => {
           return null;
         }
       },
+      getVideoEl: () => videoRef.current,
     }),
     []
   );
